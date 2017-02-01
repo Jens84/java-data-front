@@ -36,7 +36,8 @@ public class MTLMaterial {
 	private String specularTexture;
 	private String specularExponentTexture;
 	private String dissolveTexture;
-	
+	private String bumpTexture;
+
 	
 	/**
 	 * Creates a new default {@link MTLMaterial}.
@@ -78,6 +79,7 @@ public class MTLMaterial {
 		this.specularTexture = other.specularTexture;
 		this.specularExponentTexture = other.specularExponentTexture;
 		this.dissolveTexture = other.dissolveTexture;
+		this.bumpTexture = other.bumpTexture;
 	}
 	
 	/**
@@ -313,4 +315,25 @@ public class MTLMaterial {
 		return dissolveTexture;
 	}
 
+	/**
+	 * Sets the bump texture filename.
+	 * <p>
+	 * If <code>null</code> is specified, then this
+	 * material will not have a bump texture.
+	 * @param filename filename of the bump texture
+	 */
+	public void setBumpTexture(String filename) {
+		this.bumpTexture = filename;
+	}
+
+	/**
+	 * Returns the bump texture filename.
+	 * <p>
+	 * If <code>null</code> is returned, then this
+	 * material will not have a bump texture.
+	 * @return bump texture filename
+	 */
+	public String getBumpTexture() {
+		return bumpTexture;
+	}
 }
