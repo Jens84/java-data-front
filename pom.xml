@@ -6,7 +6,7 @@
 
 	<groupId>com.momchil_atanasov</groupId>
 	<artifactId>com.momchil_atanasov.data.front</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
 
 	<url>http://momchil-atanasov.com</url>

@@ -16,9 +16,6 @@
 
 package com.momchil_atanasov.data.front.parser;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
 import com.momchil_atanasov.data.front.common.IFastFloat;
 import com.momchil_atanasov.data.front.common.MTLLimits;
 import com.momchil_atanasov.data.front.error.WFCorruptException;
@@ -27,6 +24,9 @@ import com.momchil_atanasov.data.front.scanner.IMTLScanner;
 import com.momchil_atanasov.data.front.scanner.IMTLScannerHandler;
 import com.momchil_atanasov.data.front.scanner.MTLLimitingScannerHandler;
 import com.momchil_atanasov.data.front.scanner.MTLScanner;
+
+import java.io.BufferedReader;
+import java.io.IOException;
 
 /**
  * Internal class that helps in the MTL resource
@@ -106,6 +106,12 @@ class MTLParseRunner implements IMTLScannerHandler {
 	}
 
 	@Override
+	public void onIllumination(IFastFloat amount) throws WFException {
+		assertCurrentMaterial();
+		currentMaterial.setIllumination((int)amount.get());
+	}
+
+	@Override
 	public void onSpecularExponent(IFastFloat amount) throws WFException {
 		assertCurrentMaterial();
 		currentMaterial.setSpecularExponent(amount.get());
@@ -139,6 +145,18 @@ class MTLParseRunner implements IMTLScannerHandler {
 	public void onDissolveTexture(String filename) throws WFException {
 		assertCurrentMaterial();
 		currentMaterial.setDissolveTexture(filename);
+	}
+
+	@Override
+	public void onBumpTexture(String filename) throws WFException {
+		assertCurrentMaterial();
+		currentMaterial.setBumpTexture(filename);
+	}
+
+	@Override
+	public void onReflectionTexture(String filename) throws WFException {
+		assertCurrentMaterial();
+		currentMaterial.setReflectionTexture(filename);
 	}
 
 	private void assertCurrentMaterial() throws WFCorruptException {

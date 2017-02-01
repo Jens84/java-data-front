@@ -138,7 +138,16 @@ public interface IMTLScannerHandler {
 	 * further scanning of the resource.
 	 */
 	public void onDissolve(IFastFloat amount) throws WFException;
-	
+
+	/**
+	 * Called when a illum statement (illum) has been read.
+	 * <p>
+	 * @param illum the illuminationn model, will not be <code>null</code>.
+	 * @throws WFException can be thrown by users to terminate any
+	 * further scanning of the resource.
+	 */
+	public void onIllumination(IFastFloat illum) throws WFException;
+
 	/**
 	 * Called when a specular exponent statement (Ns) has been read.
 	 * <p>
@@ -189,4 +198,20 @@ public interface IMTLScannerHandler {
 	 * further scanning of the resource.
 	 */
 	public void onDissolveTexture(String filename) throws WFException;
+
+	/**
+	 * Called when a bump texture statement (bump) has been read.
+	 * @param filename location of the texture file
+	 * @throws WFException can be thrown by users to terminate any
+	 * further scanning of the resource.
+	 */
+	public void onBumpTexture(String filename) throws WFException;
+
+	/**
+	 * Called when a reflection texture statement (refl) has been read.
+	 * @param filename location of the texture file
+	 * @throws WFException can be thrown by users to terminate any
+	 * further scanning of the resource.
+	 */
+	public void onReflectionTexture(String filename) throws WFException;
 }

@@ -16,12 +16,12 @@
 
 package com.momchil_atanasov.data.front.scanner;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
 import com.momchil_atanasov.data.front.common.IFastFloat;
 import com.momchil_atanasov.data.front.error.WFCorruptException;
 import com.momchil_atanasov.data.front.error.WFException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
 
 /**
  * Internal class that performs the MTL scanning.
@@ -37,12 +37,15 @@ class MTLScanRunner {
     private static final String COMMAND_SPECULAR_COLOR = "Ks";
     private static final String COMMAND_TRANSMISSION_COLOR = "Tf";
     private static final String COMMAND_DISSOLVE = "d";
+    private static final String COMMAND_ILLUMINATION = "illum";
     private static final String COMMAND_SPECULAR_EXPONENT = "Ns";
     private static final String COMMAND_AMBIENT_TEXTURE = "map_Ka";
     private static final String COMMAND_DIFFUSE_TEXTURE = "map_Kd";
     private static final String COMMAND_SPECULAR_TEXTURE = "map_Ks";
     private static final String COMMAND_SPECULAR_EXPONENT_TEXTURE = "map_Ns";
     private static final String COMMAND_DISSOLVE_TEXTURE = "map_d";
+    private static final String COMMAND_BUMP_TEXTURE = "bump";
+    private static final String COMMAND_REFLECTION_TEXTURE = "refl";
 
 	private final IMTLScannerHandler handler;
 	private final WFScanCommand command = new WFScanCommand();
@@ -70,6 +73,8 @@ class MTLScanRunner {
             	processTransmissionColor(command);
             } else if (command.isCommand(COMMAND_DISSOLVE)) {
             	processDissolve(command);
+            } else if (command.isCommand(COMMAND_ILLUMINATION)) {
+            	processIllumination(command);
             } else if (command.isCommand(COMMAND_SPECULAR_EXPONENT)) {
             	processSpecularExponent(command);
             } else if (command.isCommand(COMMAND_AMBIENT_TEXTURE)) {
@@ -82,6 +87,10 @@ class MTLScanRunner {
             	processSpecularExponentTexture(command);
             } else if (command.isCommand(COMMAND_DISSOLVE_TEXTURE)) {
             	processDissolveTexture(command);
+            } else if (command.isCommand(COMMAND_BUMP_TEXTURE)) {
+            	processBumpTexture(command);
+            } else if (command.isCommand(COMMAND_REFLECTION_TEXTURE)) {
+            	processReflectionTexture(command);
             }
 		}
 	}
@@ -132,7 +141,15 @@ class MTLScanRunner {
 		final IFastFloat factor = command.getFastFloat(command.getLastParamIndex());
 		handler.onDissolve(factor);
 	}
-	
+
+	private void processIllumination(WFScanCommand command) throws WFException {
+		if (command.getParameterCount() == 0) {
+			throw new WFCorruptException("Missing illumination model.");
+		}
+		final IFastFloat illum = command.getFastFloat(command.getLastParamIndex());
+		handler.onIllumination(illum);
+	}
+
 	private void processSpecularExponent(WFScanCommand command) throws WFException {
 		if (command.getParameterCount() == 0) {
 			throw new WFCorruptException("Missing specular exponent amount.");
@@ -179,6 +196,22 @@ class MTLScanRunner {
 		}
 		final String filename = getTextureFilename(command);
 		handler.onDissolveTexture(filename);
+	}
+
+	private void processBumpTexture(WFScanCommand command) throws WFException {
+		if (command.getParameterCount() == 0) {
+			throw new WFCorruptException("Missing bump texture filename.");
+		}
+		final String filename = getTextureFilename(command);
+		handler.onBumpTexture(filename);
+	}
+
+	private void processReflectionTexture(WFScanCommand command) throws WFException {
+		if (command.getParameterCount() == 0) {
+			throw new WFCorruptException("Missing reflection texture filename.");
+		}
+		final String filename = getTextureFilename(command);
+		handler.onReflectionTexture(filename);
 	}
 
 	private String getTextureFilename(WFScanCommand command) {

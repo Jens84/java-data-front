@@ -31,12 +31,14 @@ public class MTLMaterial {
 	private final MTLColor transmissionColor = new MTLColor(0.0f, 0.0f, 0.0f);
 	private float specularExponent = 0.0f;
 	private float dissolve = 1.0f;
+	private int illumination = 0;
 	private String ambientTexture;
 	private String diffuseTexture;
 	private String specularTexture;
 	private String specularExponentTexture;
 	private String dissolveTexture;
 	private String bumpTexture;
+	private String reflectionTexture;
 
 	
 	/**
@@ -74,12 +76,14 @@ public class MTLMaterial {
 		this.transmissionColor.setTo(other.transmissionColor);
 		this.specularExponent = other.specularExponent;
 		this.dissolve = other.dissolve;
+		this.illumination = other.illumination;
 		this.ambientTexture = other.ambientTexture;
 		this.diffuseTexture = other.dissolveTexture;
 		this.specularTexture = other.specularTexture;
 		this.specularExponentTexture = other.specularExponentTexture;
 		this.dissolveTexture = other.dissolveTexture;
 		this.bumpTexture = other.bumpTexture;
+		this.reflectionTexture = other.reflectionTexture;
 	}
 	
 	/**
@@ -204,7 +208,25 @@ public class MTLMaterial {
 	public float getDissolve() {
 		return dissolve;
 	}
-	
+
+	/**
+	 * Sets this material's illumination model.
+	 * <p>
+	 * @param illum the illumination value
+	 */
+	public void setIllumination(int illum) {
+		this.illumination = illum;
+	}
+
+	/**
+	 * Returns this material's illumination model.
+	 * <p>
+	 * @return the illumination value
+	 */
+	public int getIllumination() {
+		return illumination;
+	}
+
 	/**
 	 * Sets the ambient texture filename.
 	 * <p>
@@ -335,5 +357,27 @@ public class MTLMaterial {
 	 */
 	public String getBumpTexture() {
 		return bumpTexture;
+	}
+
+	/**
+	 * Sets the reflection texture filename.
+	 * <p>
+	 * If <code>null</code> is specified, then this
+	 * material will not have a bump texture.
+	 * @param filename filename of the reflection texture
+	 */
+	public void setReflectionTexture(String filename) {
+		this.reflectionTexture = filename;
+	}
+
+	/**
+	 * Returns the reflection texture filename.
+	 * <p>
+	 * If <code>null</code> is returned, then this
+	 * material will not have a reflection texture.
+	 * @return reflection texture filename
+	 */
+	public String getReflectionTexture() {
+		return reflectionTexture;
 	}
 }

@@ -16,16 +16,14 @@
 
 package com.momchil_atanasov.data.front.stub;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import com.momchil_atanasov.data.front.common.IFastFloat;
+import com.momchil_atanasov.data.front.error.WFException;
+import com.momchil_atanasov.data.front.scanner.IMTLScannerHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.momchil_atanasov.data.front.common.IFastFloat;
-import com.momchil_atanasov.data.front.error.WFException;
-import com.momchil_atanasov.data.front.scanner.IMTLScannerHandler;
+import static org.junit.Assert.*;
 
 public class MTLContentScannerHandler implements IMTLScannerHandler {
 	
@@ -38,12 +36,15 @@ public class MTLContentScannerHandler implements IMTLScannerHandler {
 	private final List<ColorRGB> specularColorsRGB = new ArrayList<ColorRGB>();
 	private final List<ColorRGB> transmissionColorsRGB = new ArrayList<ColorRGB>();
 	private final List<Float> dissolves = new ArrayList<Float>();
+	private final List<Integer> illuminations = new ArrayList<Integer>();
 	private final List<Float> specularExponents = new ArrayList<Float>();
 	private final List<String> ambientTextures = new ArrayList<String>();
 	private final List<String> diffuseTextures = new ArrayList<String>();
 	private final List<String> specularTextures = new ArrayList<String>();
 	private final List<String> specularExponentTextures = new ArrayList<String>();
 	private final List<String> dissolveTextures = new ArrayList<String>();
+	private final List<String> bumpTextures = new ArrayList<String>();
+	private final List<String> reflectionTextures = new ArrayList<String>();
 
 	
 	public void assertCommentCount(int count) {
@@ -197,7 +198,12 @@ public class MTLContentScannerHandler implements IMTLScannerHandler {
 	public void onDissolve(IFastFloat amount) {
 		dissolves.add((amount != null) ? amount.get() : null);
 	}
-	
+
+	@Override
+	public void onIllumination(IFastFloat illum) throws WFException {
+		illuminations.add((illum != null) ? new Integer((int)illum.get()) : null);
+	}
+
 	@Override
 	public void onSpecularExponent(IFastFloat amount) {
 		specularExponents.add((amount != null) ? amount.get() : null);
@@ -227,7 +233,17 @@ public class MTLContentScannerHandler implements IMTLScannerHandler {
 	public void onDissolveTexture(String filename) throws WFException {
 		dissolveTextures.add(filename);
 	}
-	
+
+	@Override
+	public void onBumpTexture(String filename) throws WFException {
+		bumpTextures.add(filename);
+	}
+
+	@Override
+	public void onReflectionTexture(String filename) throws WFException {
+		reflectionTextures.add(filename);
+	}
+
 	
 	private ColorRGB createColorRGB(IFastFloat r, IFastFloat g, IFastFloat b) {
 		final ColorRGB color = new ColorRGB();

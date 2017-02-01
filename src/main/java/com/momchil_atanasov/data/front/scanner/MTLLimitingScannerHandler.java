@@ -103,6 +103,11 @@ public class MTLLimitingScannerHandler implements IMTLScannerHandler {
 	}
 
 	@Override
+	public void onIllumination(IFastFloat illumination) throws WFException {
+		delegate.onIllumination(illumination);
+	}
+
+	@Override
 	public void onSpecularExponent(IFastFloat amount) throws WFException {
 		delegate.onSpecularExponent(amount);
 	}
@@ -130,6 +135,16 @@ public class MTLLimitingScannerHandler implements IMTLScannerHandler {
 	@Override
 	public void onDissolveTexture(String filename) throws WFException {
 		delegate.onDissolveTexture(filename);
+	}
+
+	@Override
+	public void onBumpTexture(String filename) throws WFException {
+		delegate.onBumpTexture(filename);
+	}
+
+	@Override
+	public void onReflectionTexture(String filename) throws WFException {
+		delegate.onReflectionTexture(filename);
 	}
 
 
