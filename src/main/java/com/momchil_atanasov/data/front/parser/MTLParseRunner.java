@@ -106,6 +106,12 @@ class MTLParseRunner implements IMTLScannerHandler {
 	}
 
 	@Override
+	public void onSharpness(IFastFloat amount) throws WFException {
+		assertCurrentMaterial();
+		currentMaterial.setSharpness(amount.get());
+	}
+
+	@Override
 	public void onIllumination(IFastFloat amount) throws WFException {
 		assertCurrentMaterial();
 		currentMaterial.setIllumination((int)amount.get());

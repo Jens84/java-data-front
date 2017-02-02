@@ -37,6 +37,7 @@ class MTLScanRunner {
     private static final String COMMAND_SPECULAR_COLOR = "Ks";
     private static final String COMMAND_TRANSMISSION_COLOR = "Tf";
     private static final String COMMAND_DISSOLVE = "d";
+    private static final String COMMAND_SHARPNESS = "sharpness";
     private static final String COMMAND_ILLUMINATION = "illum";
     private static final String COMMAND_SPECULAR_EXPONENT = "Ns";
     private static final String COMMAND_AMBIENT_TEXTURE = "map_Ka";
@@ -73,6 +74,8 @@ class MTLScanRunner {
             	processTransmissionColor(command);
             } else if (command.isCommand(COMMAND_DISSOLVE)) {
             	processDissolve(command);
+            } else if (command.isCommand(COMMAND_SHARPNESS)) {
+            	processSharpness(command);
             } else if (command.isCommand(COMMAND_ILLUMINATION)) {
             	processIllumination(command);
             } else if (command.isCommand(COMMAND_SPECULAR_EXPONENT)) {
@@ -140,6 +143,14 @@ class MTLScanRunner {
 		}
 		final IFastFloat factor = command.getFastFloat(command.getLastParamIndex());
 		handler.onDissolve(factor);
+	}
+
+	private void processSharpness(WFScanCommand command) throws WFException {
+		if (command.getParameterCount() == 0) {
+			throw new WFCorruptException("Missing sharpness factor.");
+		}
+		final IFastFloat factor = command.getFastFloat(command.getLastParamIndex());
+		handler.onSharpness(factor);
 	}
 
 	private void processIllumination(WFScanCommand command) throws WFException {

@@ -103,6 +103,11 @@ public class MTLLimitingScannerHandler implements IMTLScannerHandler {
 	}
 
 	@Override
+	public void onSharpness(IFastFloat amount) throws WFException {
+		delegate.onSharpness(amount);
+	}
+
+	@Override
 	public void onIllumination(IFastFloat illumination) throws WFException {
 		delegate.onIllumination(illumination);
 	}

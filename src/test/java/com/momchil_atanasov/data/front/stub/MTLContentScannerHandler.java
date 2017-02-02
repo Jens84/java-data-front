@@ -36,6 +36,7 @@ public class MTLContentScannerHandler implements IMTLScannerHandler {
 	private final List<ColorRGB> specularColorsRGB = new ArrayList<ColorRGB>();
 	private final List<ColorRGB> transmissionColorsRGB = new ArrayList<ColorRGB>();
 	private final List<Float> dissolves = new ArrayList<Float>();
+	private final List<Float> sharpnesses = new ArrayList<Float>();
 	private final List<Integer> illuminations = new ArrayList<Integer>();
 	private final List<Float> specularExponents = new ArrayList<Float>();
 	private final List<String> ambientTextures = new ArrayList<String>();
@@ -197,6 +198,11 @@ public class MTLContentScannerHandler implements IMTLScannerHandler {
 	@Override
 	public void onDissolve(IFastFloat amount) {
 		dissolves.add((amount != null) ? amount.get() : null);
+	}
+
+	@Override
+	public void onSharpness(IFastFloat amount) {
+		sharpnesses.add((amount != null) ? amount.get() : null);
 	}
 
 	@Override

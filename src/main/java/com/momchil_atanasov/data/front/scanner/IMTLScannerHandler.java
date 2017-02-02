@@ -140,6 +140,14 @@ public interface IMTLScannerHandler {
 	public void onDissolve(IFastFloat amount) throws WFException;
 
 	/**
+	 * Called when a sharpness statement (d) has been read.
+	 * @param amount the sharpness amount, will not be <code>null</code>.
+	 * @throws WFException can be thrown by users to terminate any
+	 * further scanning of the resource.
+	 */
+	public void onSharpness(IFastFloat amount) throws WFException;
+
+	/**
 	 * Called when a illum statement (illum) has been read.
 	 * <p>
 	 * @param illum the illuminationn model, will not be <code>null</code>.

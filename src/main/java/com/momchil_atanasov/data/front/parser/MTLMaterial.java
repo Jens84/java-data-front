@@ -16,6 +16,9 @@
 
 package com.momchil_atanasov.data.front.parser;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Represents a single material.
  * 
@@ -31,6 +34,7 @@ public class MTLMaterial {
 	private final MTLColor transmissionColor = new MTLColor(0.0f, 0.0f, 0.0f);
 	private float specularExponent = 0.0f;
 	private float dissolve = 1.0f;
+	private float sharpness = 0.0f;
 	private int illumination = 0;
 	private String ambientTexture;
 	private String diffuseTexture;
@@ -39,6 +43,7 @@ public class MTLMaterial {
 	private String dissolveTexture;
 	private String bumpTexture;
 	private String reflectionTexture;
+	private Map<String, Object> customData = new HashMap<String, Object>();
 
 	
 	/**
@@ -76,6 +81,7 @@ public class MTLMaterial {
 		this.transmissionColor.setTo(other.transmissionColor);
 		this.specularExponent = other.specularExponent;
 		this.dissolve = other.dissolve;
+		this.sharpness = other.sharpness;
 		this.illumination = other.illumination;
 		this.ambientTexture = other.ambientTexture;
 		this.diffuseTexture = other.dissolveTexture;
@@ -84,6 +90,10 @@ public class MTLMaterial {
 		this.dissolveTexture = other.dissolveTexture;
 		this.bumpTexture = other.bumpTexture;
 		this.reflectionTexture = other.reflectionTexture;
+
+		for (Map.Entry<String, Object> entry : other.getCustomData().entrySet()) {
+			this.addCustomData(entry.getKey(), entry.getValue());
+		}
 	}
 	
 	/**
@@ -182,7 +192,7 @@ public class MTLMaterial {
 	public float getSpecularExponent() {
 		return specularExponent;
 	}
-	
+
 	/**
 	 * Sets this material's dissolve.
 	 * <p>
@@ -195,7 +205,7 @@ public class MTLMaterial {
 	public void setDissolve(float dissolve) {
 		this.dissolve = dissolve;
 	}
-	
+
 	/**
 	 * Returns this material's dissolve.
 	 * <p>
@@ -207,6 +217,21 @@ public class MTLMaterial {
 	 */
 	public float getDissolve() {
 		return dissolve;
+	}
+	/**
+	 * Sets this material's sharpness.
+	 * @param sharpness the sharpness value
+	 */
+	public void setSharpness(float sharpness) {
+		this.sharpness = sharpness;
+	}
+
+	/**
+	 * Returns this material's sharpness.
+	 * @return the sharpness value
+	 */
+	public float getSharpness() {
+		return sharpness;
 	}
 
 	/**
@@ -380,4 +405,22 @@ public class MTLMaterial {
 	public String getReflectionTexture() {
 		return reflectionTexture;
 	}
+
+	/**
+	 * Allows adding custom data to a material
+	 * @param key name of the custom data
+	 * @param value value of the custom data
+	 */
+	public void addCustomData(String key, Object value) {
+		this.customData.put(key, value);
+	}
+
+	/**
+	 * Returns the custom data
+	 * @return the custom data map
+	 */
+	public Map<String, Object> getCustomData() {
+		return this.customData;
+	}
+
 }
