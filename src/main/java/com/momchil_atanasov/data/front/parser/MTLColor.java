@@ -16,8 +16,6 @@
 
 package com.momchil_atanasov.data.front.parser;
 
-import java.math.BigDecimal;
-
 /**
  * This class represents an RGB color.
  *
@@ -107,9 +105,9 @@ public class MTLColor {
 
     @Override
     public int hashCode() {
-        int result = new BigDecimal(r).setScale(6, BigDecimal.ROUND_CEILING).hashCode();
-        result = result * 31 + new BigDecimal(g).setScale(6, BigDecimal.ROUND_CEILING).hashCode();
-        result = result * 31 + new BigDecimal(b).setScale(6, BigDecimal.ROUND_CEILING).hashCode();
+        int result = (int) (r * 1000000);
+        result = result * 31 + (int) (g * 1000000);
+        result = result * 31 + (int) (b * 1000000);
         return result;
     }
 
@@ -122,9 +120,9 @@ public class MTLColor {
             return false;
         }
         final MTLColor other = (MTLColor) obj;
-        return new BigDecimal(r).setScale(6, BigDecimal.ROUND_CEILING).equals(new BigDecimal(other.r).setScale(6, BigDecimal.ROUND_CEILING))
-                && new BigDecimal(g).setScale(6, BigDecimal.ROUND_CEILING).equals(new BigDecimal(other.g).setScale(6, BigDecimal.ROUND_CEILING))
-                && new BigDecimal(b).setScale(6, BigDecimal.ROUND_CEILING).equals(new BigDecimal(other.b).setScale(6, BigDecimal.ROUND_CEILING));
+        return (Math.abs(r - other.r) < 0.000001)
+                && (Math.abs(g - other.g) < 0.000001)
+                && (Math.abs(b - other.b) < 0.000001);
     }
 
 }
